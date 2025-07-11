@@ -14,7 +14,7 @@ export default function Navbar() {
         {/* Navigation menu */}
         <nav className="hidden md:flex space-x-8 text-gray-700 font-medium">
           <a href="/">Trang chủ</a>
-        <a href="/trangChu/sanpham">Sản phẩm</a>
+          <a href="/sanpham">Sản phẩm</a>
           <a href="/thuong-hieu">Thương hiệu</a>
           <a href="/ve-chung-toi">Về chúng tôi</a>
           <a href="/lien-he">Liên hệ</a>
@@ -24,7 +24,10 @@ export default function Navbar() {
         <div className="flex items-center space-x-4 text-gray-800 text-lg">
           <FaSearch className="cursor-pointer hover:text-black" />
           <FaHeart className="cursor-pointer hover:text-black" />
-          <FaShoppingCart className="cursor-pointer hover:text-black" />
+          <a href="/giohang">
+            <FaShoppingCart className="cursor-pointer hover:text-black" />
+          </a>
+
         </div>
       </div>
       {/* Đường kẻ dưới nav */}

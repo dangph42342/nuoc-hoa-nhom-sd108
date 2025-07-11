@@ -1,9 +1,7 @@
-// File: routes/SanPhamChiTiet.route.js
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const { themKhachHang } = require("../controllers/KhachHang.controller");
 
-// (Tạm thời chưa có gì)
+router.post("/", themKhachHang);
 
-// Xuất ra
 module.exports = router;

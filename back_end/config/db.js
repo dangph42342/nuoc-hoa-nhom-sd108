@@ -14,25 +14,21 @@ const config = {
   port: parseInt(process.env.DB_PORT),
 };
 
-const poolPromise = new sql.ConnectionPool(config)
-  .connect()
-  .then((pool) => {
-    console.log("✅ Đã kết nối SQL Server");
-    return pool;
-  })
-  .catch((err) => {
-    console.error("❌ Lỗi kết nối SQL Server:", err);
-  });
+const pool = new sql.ConnectionPool(config);
+const poolConnect = pool.connect()
+  .then(() => console.log("✅ Đã kết nối SQL Server"))
+  .catch(err => console.error("❌ Lỗi kết nối SQL Server:", err));
 
-/**
- * Gói gọn 1 hàm query đơn giản
- */
+// ✅ Thêm hàm query nếu bạn muốn dùng kiểu db.query(sql)
 const query = async (sqlText) => {
-  const pool = await poolPromise;
+  await poolConnect;
   const result = await pool.request().query(sqlText);
-  return result.recordset; // Trả về mảng kết quả
+  return result.recordset;
 };
 
 module.exports = {
-  query, // ✅ Giúp gọi db.query(...) trong route
+  sql,
+  pool,
+  poolConnect,
+  query // ✅ export thêm
 };

@@ -196,7 +196,28 @@ CREATE TABLE SanPham_BoSuuTap (
   FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham),
   FOREIGN KEY (IDBoSuuTap) REFERENCES BoSuuTap(ID)
 );
--- INSERT cho các bảng phụ (1-7)
+
+-- 21. Giỏ hàng
+CREATE TABLE GioHang (
+  MaGioHang INT PRIMARY KEY IDENTITY(1,1),
+  MaKhachHang INT,
+  NgayTao DATE DEFAULT GETDATE(),
+  TrangThai BIT DEFAULT 0,
+  FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(ID)
+);
+
+-- 22. Chi tiết giỏ hàng
+CREATE TABLE GioHangChiTiet (
+  ID INT PRIMARY KEY IDENTITY(1,1),
+  MaGioHang INT,
+  MaSPCT INT,
+  SoLuong INT,
+  DonGia DECIMAL(18, 2),
+  FOREIGN KEY (MaGioHang) REFERENCES GioHang(MaGioHang),
+  FOREIGN KEY (MaSPCT) REFERENCES SanPhamChiTiet(ID)
+);
+
+-- INSERT dữ liệu mẫu
 INSERT INTO ThuongHieu VALUES (1, N'Chanel'), (2, N'Dior'), (3, N'Gucci');
 INSERT INTO MuiHuong VALUES (1, N'Hương hoa'), (2, N'Hương gỗ'), (3, N'Hương trái cây');
 INSERT INTO LoaiSanPham VALUES (1, N'Nước hoa nam'), (2, N'Nước hoa nữ');
@@ -205,51 +226,41 @@ INSERT INTO XuatXu VALUES (1, N'Pháp'), (2, N'Ý'), (3, N'Mỹ');
 INSERT INTO MauSac VALUES (1, N'Đỏ'), (2, N'Trắng'), (3, N'Xanh');
 INSERT INTO ChatLieuVoChai VALUES (1, N'Thủy tinh'), (2, N'Nhựa');
 
--- Sản phẩm (8)
 INSERT INTO SanPham VALUES
 (1, N'Chanel No.5', 'anh1.jpg', N'Cổ điển, sang trọng', '2025-01-01', 3000000, 1, 1),
 (2, N'Dior Sauvage', 'anh2.jpg', N'Nam tính, mạnh mẽ', '2025-02-01', 2800000, 1, 2),
 (3, N'Chanel No.5', 'anh3.jpg', N'Cổ điển, sang trọng', '2025-01-01', 3000000, 1, 1),
 (4, N'Dior Sauvage', 'anh4.jpg', N'Nam tính, mạnh mẽ', '2025-02-01', 2800000, 1, 2);
--- Chi tiết sản phẩm (9)
+
 INSERT INTO SanPhamChiTiet VALUES
 (1, 1, 2, 1, 2, 2, 1, 1, 3000000, 1),
-(2, 2, 1, 2, 1, 1, 2, 2, 2800000, 1);
+(2, 2, 1, 2, 1, 1, 2, 2, 2800000, 1),
+(3, 3, 2, 2, 1, 2, 2, 1, 3000000, 1),
+(4, 4, 1, 3, 3, 3, 3, 2, 2800000, 1);
 
--- Khuyến mãi (10)
 INSERT INTO KhuyenMai VALUES (1, N'Tết Sale', 10, '2025-01-01', '2025-02-01', 1);
-
--- Sản phẩm khuyến mãi (11)
 INSERT INTO SanPhamKhuyenMai VALUES (1, 1, '2025-01-01', '2025-01-31', 2700000);
-
--- Khách hàng (12)
 INSERT INTO KhachHang VALUES (1, N'Nguyễn Văn A', '0901234567', N'Hà Nội', 'a@gmail.com', 1, '1990-01-01', '2025-01-10', 1);
-
--- Nhân viên (13)
 INSERT INTO NhanVien VALUES (1, N'Lê Thị B', 'nvb@gmail.com', N'HCM', N'Quản lý', '123456', 0, '1985-02-02', '2025-01-05', 1);
-
--- Hình thức thanh toán (14)
 INSERT INTO HinhThucThanhToan VALUES (1, N'Tiền mặt'), (2, N'Chuyển khoản');
-
--- Trạng thái thanh toán (15)
 INSERT INTO TrangThaiThanhToan VALUES (1, N'Chưa thanh toán'), (2, N'Đã thanh toán');
-
--- Hóa đơn (16)
 INSERT INTO HoaDon VALUES (1, 1, 1, 1, 1, '2025-01-15', '2025-01-16', 2, N'Đã giao');
-
--- Chi tiết hóa đơn (17)
 INSERT INTO HoaDonChiTiet VALUES (1, 1, 1, 1, 2700000);
+INSERT INTO Banner VALUES
+(1, N'Giảm giá Tết', 'banner1.jpg', N'Ưu đãi cực sốc dịp Tết', 1),
+(2, N'Giảm giá Tết', 'banner2.jpg', N'Ưu đãi cực sốc dịp Tết', 1),
+(3, N'Giảm giá Tết', 'banner3.jpg', N'Ưu đãi cực sốc dịp Tết', 1),
+(4, N'Giảm giá Tết', 'banner4.jpg', N'Ưu đãi cực sốc dịp Tết', 1);
 
--- Banner (18)
-INSERT INTO Banner VALUES (1, N'Giảm giá Tết', 'banner1.jpg', N'Ưu đãi cực sốc dịp Tết', 1);
-INSERT INTO Banner VALUES (2, N'Giảm giá Tết', 'banner2.jpg', N'Ưu đãi cực sốc dịp Tết', 1);
-INSERT INTO Banner VALUES (3, N'Giảm giá Tết', 'banner3.jpg', N'Ưu đãi cực sốc dịp Tết', 1);
-INSERT INTO Banner VALUES (4, N'Giảm giá Tết', 'banner4.jpg', N'Ưu đãi cực sốc dịp Tết', 1);
-
--- Bộ sưu tập (19)
 INSERT INTO BoSuuTap VALUES (1, N'Xuân Hè 2025', N'Nước hoa mùa xuân', 'spring.jpg', 1);
-
--- Sản phẩm - Bộ sưu tập (20)
 INSERT INTO SanPham_BoSuuTap VALUES (1, 1);
 
-SELECT * FROM SanPham
+-- INSERT giỏ hàng và chi tiết giỏ hàng
+INSERT INTO GioHang (MaKhachHang, NgayTao, TrangThai) VALUES (1, '2025-07-01', 0);
+INSERT INTO GioHangChiTiet (MaGioHang, MaSPCT, SoLuong, DonGia) VALUES (1, 1, 2, 3000000);
+
+-- Kiểm tra
+SELECT * FROM SanPham;
+SELECT * FROM SanPham WHERE MaSanPham = 3;
+SELECT * FROM SanPhamChiTiet
+
